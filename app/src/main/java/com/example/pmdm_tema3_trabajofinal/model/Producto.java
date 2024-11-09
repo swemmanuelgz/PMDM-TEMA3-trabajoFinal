@@ -1,0 +1,72 @@
+package com.example.pmdm_tema3_trabajofinal.model;
+
+public class Producto {
+    private int id;
+    private int fotoId;
+    private String titulo;
+    private String descripcion;
+    private double precio;
+
+    public Producto() {
+
+    }
+
+    public Producto(int id, int fotoId, String titulo, String descripcion, double precio) {
+        this.id = id;
+        this.fotoId = fotoId;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.precio = precio;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getFotoId() {
+        return fotoId;
+    }
+
+    public void setFotoId(int fotoId) {
+        this.fotoId = fotoId;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    @Override
+    public String toString() {
+        return "Producto{" +
+                "id=" + id +
+                ", fotoId=" + fotoId +
+                ", titulo='" + titulo + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", precio=" + precio +
+                '}';
+    }
+}
