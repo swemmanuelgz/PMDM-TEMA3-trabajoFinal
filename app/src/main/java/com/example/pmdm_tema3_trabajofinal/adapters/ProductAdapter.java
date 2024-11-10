@@ -15,7 +15,7 @@ import com.example.pmdm_tema3_trabajofinal.model.Producto;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
-
+    //lista de productos
     private List<Producto> productoList;
     private  boolean darkMode;
     private OnProductSelectedListener onProductSelectedListener;
@@ -33,7 +33,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
         return new ProductViewHolder(view);
 
     }
-
+//metodo para activar el modo oscuro
     public void setDarkMode(boolean darkMode) {
         this.darkMode = darkMode;
         notifyDataSetChanged();
@@ -67,7 +67,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
             holder.btnCart.setBackgroundColor(Color.WHITE);
         }
         //listener que detecta que producto es seleccionado
-        holder.itemView.setOnClickListener(v ->{
+        holder.btnCart.setOnClickListener(v ->{
             if (onProductSelectedListener != null) {
                 onProductSelectedListener.onProductSelected(producto);
             }

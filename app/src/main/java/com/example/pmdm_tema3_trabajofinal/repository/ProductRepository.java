@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class ProductRepository {
+    //la lista de productos del repositorio
     private ArrayList<Producto> productosList = new ArrayList<>();
     private Context context;
 
@@ -30,7 +31,7 @@ public class ProductRepository {
     public ArrayList<Producto> getProductosList() {
         return productosList;
     }
-
+    //Cogemos una imagen por su nombre
     public int getDrawableByName(String name) {
         int resId = context.getResources().getIdentifier(name, "drawable", context.getPackageName());
         if (resId == 0) {
