@@ -2,9 +2,8 @@ package com.example.pmdm_tema3_trabajofinal;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.LinearLayout;
+import android.widget.ImageButton;
 import android.widget.Switch;
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,24 +40,35 @@ public class MainActivity extends AppCompatActivity {
 
         //Cogemos el switch y otros elementos
         Switch sw = findViewById(R.id.sw);
-        LinearLayout linearLayout= findViewById(R.id.linearLayout);
+        ImageButton btnCartShop = findViewById(R.id.btnCartShop);
+        ImageButton btnBuy = findViewById(R.id.btnBuy);
+        ImageButton btnCart = findViewById(R.id.btnCart);
         ConstraintLayout mainLayout= findViewById(R.id.main);
-        TextView textView = findViewById(R.id.txtTitulo);
+
 
 
 
 
         //Le ponemos un listener para poner el modo oscuro
+        sw.setButtonDrawable(productRepository.getDrawableByName("luna"));
         sw.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 mainLayout.setBackgroundColor(Color.BLACK);
                // linearLayout.setBackgroundColor(Color.BLACK);
                 productAdapter.setDarkMode(true);
+                btnBuy.setBackgroundColor(Color.BLACK);
+                btnCartShop.setBackgroundColor(Color.BLACK);
+                sw.setButtonDrawable(productRepository.getDrawableByName("sol"));
+
 
             } else {
                 mainLayout.setBackgroundColor(Color.WHITE);
                // linearLayout.setBackgroundColor(Color.WHITE);
                 productAdapter.setDarkMode(false);
+                btnBuy.setBackgroundColor(Color.WHITE);
+                btnCartShop.setBackgroundColor(Color.WHITE);
+                sw.setButtonDrawable(productRepository.getDrawableByName("luna"));
+
             }
 
         });

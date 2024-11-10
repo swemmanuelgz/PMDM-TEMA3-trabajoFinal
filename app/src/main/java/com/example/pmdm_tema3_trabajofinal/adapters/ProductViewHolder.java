@@ -1,6 +1,7 @@
 package com.example.pmdm_tema3_trabajofinal.adapters;
 
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,6 +13,7 @@ import com.example.pmdm_tema3_trabajofinal.R;
 public class ProductViewHolder extends RecyclerView.ViewHolder {
     ImageView imgFoto;
     TextView txtId, txtTitulo, txtDescripcion, txtPrecio;
+    ImageButton btnCart;
 
     public ProductViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -20,5 +22,6 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
         txtTitulo = itemView.findViewById(R.id.txtTitulo);
         txtDescripcion = itemView.findViewById(R.id.txtDescripcion);
         txtPrecio = itemView.findViewById(R.id.txtPrecio);
+        btnCart = itemView.findViewById(R.id.btnCart);
     }
 }
