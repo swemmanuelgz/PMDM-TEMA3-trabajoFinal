@@ -32,6 +32,12 @@ public class MainActivity extends AppCompatActivity {
         });
         //Cogemos el repositorio usando el constructor por contexto
         ProductRepository productRepository = new ProductRepository(this);
+        ProductAdapter productAdapter = new ProductAdapter(productRepository.getProductosList());
+
+        //Cogemos el recycler
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(productAdapter);
 
         //Cogemos el switch y otros elementos
         Switch sw = findViewById(R.id.sw);
@@ -46,22 +52,20 @@ public class MainActivity extends AppCompatActivity {
         sw.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 mainLayout.setBackgroundColor(Color.BLACK);
-                textView.setTextColor(Color.WHITE);
                // linearLayout.setBackgroundColor(Color.BLACK);
+                productAdapter.setDarkMode(true);
 
             } else {
                 mainLayout.setBackgroundColor(Color.WHITE);
                // linearLayout.setBackgroundColor(Color.WHITE);
+                productAdapter.setDarkMode(false);
             }
 
         });
 
-        //Cogemos el recycler
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-       recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         //productoList.add(new Producto(productRepository.getDrawableByName("iphone16"),1, "Iphone", "16 pro", 10.0));
 
-        ProductAdapter productAdapter = new ProductAdapter(productRepository.getProductosList());
-        recyclerView.setAdapter(productAdapter);
+
     }
 }

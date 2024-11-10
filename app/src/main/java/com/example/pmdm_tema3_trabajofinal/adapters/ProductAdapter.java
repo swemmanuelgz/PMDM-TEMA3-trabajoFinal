@@ -1,5 +1,6 @@
 package com.example.pmdm_tema3_trabajofinal.adapters;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import java.util.List;
 public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
 
     private List<Producto> productoList;
+    private  boolean darkMode;
 
     public ProductAdapter(List<Producto> productoList) {
         this.productoList = productoList;
@@ -30,6 +32,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
 
     }
 
+    public void setDarkMode(boolean darkMode) {
+        this.darkMode = darkMode;
+        notifyDataSetChanged();
+    }
+
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Producto producto = productoList.get(position);
@@ -38,6 +45,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
         holder.txtTitulo.setText(producto.getTitulo());
         holder.txtDescripcion.setText(producto.getDescripcion());
         holder.txtPrecio.setText(String.valueOf(producto.getPrecio()));
+
+        if (darkMode) {
+            holder.txtTitulo.setTextColor(Color.WHITE);
+            holder.txtDescripcion.setTextColor(Color.WHITE);
+            holder.txtPrecio.setTextColor(Color.WHITE);
+            holder.txtId.setTextColor(Color.WHITE);
+        }else {
+            holder.txtTitulo.setTextColor(Color.BLACK);
+            holder.txtDescripcion.setTextColor(Color.BLACK);
+            holder.txtPrecio.setTextColor(Color.BLACK);
+            holder.txtId.setTextColor(Color.BLACK);
+        }
 
     }
 
