@@ -12,7 +12,7 @@ import com.example.pmdm_tema3_trabajofinal.model.Producto;
 
 import java.util.List;
 
-public abstract class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
+public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
 
     private List<Producto> productoList;
 
@@ -33,8 +33,8 @@ public abstract class ProductAdapter extends RecyclerView.Adapter<ProductViewHol
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Producto producto = productoList.get(position);
-
-        holder.txtId.setText(String.valueOf(producto.getId()));
+        holder.imgFoto.setImageResource(producto.getFotoId());
+        holder.txtId.setText("ID: "+String.valueOf(producto.getId()));
         holder.txtTitulo.setText(producto.getTitulo());
         holder.txtDescripcion.setText(producto.getDescripcion());
         holder.txtPrecio.setText(String.valueOf(producto.getPrecio()));
