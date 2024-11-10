@@ -18,6 +18,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
 
     private List<Producto> productoList;
     private  boolean darkMode;
+    private OnProductSelectedListener onProductSelectedListener;
 
     public ProductAdapter(List<Producto> productoList) {
         this.productoList = productoList;
@@ -36,6 +37,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
     public void setDarkMode(boolean darkMode) {
         this.darkMode = darkMode;
         notifyDataSetChanged();
+    }
+    //Listener que detecta que producto es seleccionado
+    public void setOnProductSelectedListener(OnProductSelectedListener listener) {
+        this.onProductSelectedListener = listener;
     }
 
     @Override
@@ -61,11 +66,21 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
             holder.txtId.setTextColor(Color.BLACK);
             holder.btnCart.setBackgroundColor(Color.WHITE);
         }
+        //listener que detecta que producto es seleccionado
+        holder.itemView.setOnClickListener(v ->{
+            if (onProductSelectedListener != null) {
+                onProductSelectedListener.onProductSelected(producto);
+            }
+        });
 
     }
 
     @Override
     public int getItemCount() {
         return productoList.size();
+    }
+
+    public interface OnProductSelectedListener {
+        void onProductSelected(Producto producto);
     }
 }

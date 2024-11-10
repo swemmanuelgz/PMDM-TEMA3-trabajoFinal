@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,16 +16,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pmdm_tema3_trabajofinal.adapters.ProductAdapter;
+import com.example.pmdm_tema3_trabajofinal.model.Producto;
 import com.example.pmdm_tema3_trabajofinal.repository.ProductRepository;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ProductAdapter.OnProductSelectedListener {
+    private TextView txtResumeOrder ;
+    private TextView txtProductsContador;
+    int contador = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.txtProductsCount), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -32,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         //Cogemos el repositorio usando el constructor por contexto
         ProductRepository productRepository = new ProductRepository(this);
         ProductAdapter productAdapter = new ProductAdapter(productRepository.getProductosList());
+        productAdapter.setOnProductSelectedListener(this);
 
         //Cogemos el recycler
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
@@ -39,11 +45,14 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(productAdapter);
 
         //Cogemos el switch y otros elementos
+        txtProductsContador = findViewById(R.id.txtContadorProducts);
+        txtResumeOrder = findViewById(R.id.txtResumeOrder);
         Switch sw = findViewById(R.id.sw);
         ImageButton btnCartShop = findViewById(R.id.btnCartShop);
         ImageButton btnBuy = findViewById(R.id.btnBuy);
         ImageButton btnCart = findViewById(R.id.btnCart);
-        ConstraintLayout mainLayout= findViewById(R.id.main);
+        ConstraintLayout mainLayout= findViewById(R.id.txtProductsCount);
+
 
 
 
@@ -74,8 +83,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        //productoList.add(new Producto(productRepository.getDrawableByName("iphone16"),1, "Iphone", "16 pro", 10.0));
+    }
 
+    @Override
+    public void onProductSelected(Producto producto) {
 
+        double precio = producto.getPrecio();
+        if (txtResumeOrder.getText().toString().isEmpty()) {
+            txtResumeOrder.setText("TOTAL: 0.0€");
+        }
+        String precioOrderStr = txtResumeOrder.getText().toString().replace("TOTAL: ","").replace("€","");
+        double precioOrder = Double.parseDouble(precioOrderStr); //Pasar de String a double
+        double total = precioOrder + precio;
+        String resumeOrder = String.valueOf(total);
+        txtResumeOrder.setText("TOTAL: "+resumeOrder+"€");
+        contador++;
+        txtProductsContador.setText(String.valueOf(contador));
     }
 }
