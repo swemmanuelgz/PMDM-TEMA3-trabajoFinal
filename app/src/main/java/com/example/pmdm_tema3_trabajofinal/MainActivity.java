@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         Switch sw = findViewById(R.id.sw);
          btnCartShop = findViewById(R.id.btnCartShop);
          btnBuy = findViewById(R.id.btnBuy);
-        ImageButton btnCart = findViewById(R.id.btnCart);
+         btnCart = findViewById(R.id.btnCart);
         ConstraintLayout mainLayout= findViewById(R.id.txtProductsCount);
 
         dialog = new Dialog(MainActivity.this);
@@ -70,15 +71,18 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
 
         btnDialogConfirmar = dialog.findViewById(R.id.btnConfirm);
         btnDialogCancelar = dialog.findViewById(R.id.btnCancel);
-
+      //Métodos para mla compra
         btnDialogConfirmar.setOnClickListener(v -> {
+            Toast.makeText(this, "Compra realizada por " + txtResumeOrder.getText().toString() + "", Toast.LENGTH_SHORT).show();
             dialog.dismiss();
         });
         btnDialogCancelar.setOnClickListener(v -> {
+            Toast.makeText(this, "Compra cancelada", Toast.LENGTH_SHORT).show();
             dialog.dismiss();
         });
 
         btnBuy.setOnClickListener(v -> {
+
             dialog.show();
         });
 

@@ -12,7 +12,7 @@ import com.example.pmdm_tema3_trabajofinal.R;
 
 public class ProductViewHolder extends RecyclerView.ViewHolder {
     ImageView imgFoto;
-    TextView txtId, txtTitulo, txtDescripcion, txtPrecio;
+    TextView txtId, txtTitulo, txtDescripcion, txtPrecio,txtMessage;
     ImageButton btnCart;
 
     public ProductViewHolder(@NonNull View itemView) {
@@ -23,5 +23,6 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
         txtDescripcion = itemView.findViewById(R.id.txtDescripcion);
         txtPrecio = itemView.findViewById(R.id.txtPrecio);
         btnCart = itemView.findViewById(R.id.btnCart);
+        txtMessage = itemView.findViewById(R.id.txtMessage);
     }
 }
