@@ -35,7 +35,7 @@ android {
 dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
-    implementation("com.github.f0ris.sweetalert:library:1.6.2")
+    implementation("com.github.f0ris.sweetalert:library:1.6.2")//Libreria para alertas
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     testImplementation(libs.junit)

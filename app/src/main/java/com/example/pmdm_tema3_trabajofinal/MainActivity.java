@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Layout;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -22,6 +23,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pmdm_tema3_trabajofinal.adapters.CartAdapter;
 import com.example.pmdm_tema3_trabajofinal.adapters.ProductAdapter;
 import com.example.pmdm_tema3_trabajofinal.model.Producto;
 import com.example.pmdm_tema3_trabajofinal.repository.ProductRepository;
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
     private Dialog dialog;
     private Button btnDialogCancelar, btnDialogConfirmar;
     private ImageButton btnCartShop, btnBuy, btnCart;
-    private ConstraintLayout products;
+    private ConstraintLayout products,cart;
     int contador = 0;
     private Double total = 0.0;
     private ArrayList<Producto> carritoList = new ArrayList<>();
@@ -62,6 +64,12 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(productAdapter);
 
+        //Cogemos el recycler
+        View cartLayout = getLayoutInflater().inflate(R.layout.cart, null);
+        RecyclerView cartRecyclerView = findViewById(R.id.reyclewViewCart);
+        cartRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        cartRecyclerView.setAdapter(new CartAdapter(carritoList));
+
         //layouts
         dialog = new Dialog(MainActivity.this);
         dialog.setContentView(R.layout.dialog_shippment);
@@ -85,16 +93,19 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
       //Métodos para la compra
         btnDialogConfirmar.setOnClickListener(v -> {
             new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
-                    .setTitleText("Compra realizada")
+                    .setTitleText("Compra realizada por: "+total.toString()+"€")
                     .show();
             Toast.makeText(this, "Compra realizada por " + txtResumeOrder.getText().toString() + "", Toast.LENGTH_SHORT).show();
             dialog.dismiss();
         });
         btnDialogCancelar.setOnClickListener(v -> {
+            new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
+                    .setTitleText("Compra cancelada")
+                    .show();
             Toast.makeText(this, "Compra cancelada", Toast.LENGTH_SHORT).show();
             dialog.dismiss();
         });
-
+        //Añade al mensaje los productos que hay en el carrito
         btnBuy.setOnClickListener(v -> {
             txtMessage = dialog.findViewById(R.id.txtMessage);
             txtMessage.append("\n" + getCarrito());
@@ -135,7 +146,8 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
     //este metodo se llama cuando se selecciona un producto y hace la suma de los precios
     @Override
     public void onProductSelected(Producto producto) {
-
+        //Coge el precio del producto seleccionado y lo suma al total y parsea los datos de nuevo para
+        //Que no hayan errores de conversion
         double precio = producto.getPrecio();
         if (txtResumeOrder.getText().toString().isEmpty()) {
             txtResumeOrder.setText("TOTAL: 0.0€");
@@ -150,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         carritoList.add(producto);
 
     }
-
+//Es el metodo que pasa a texto los nombres de los productos en el carrito
     public StringBuilder getCarrito() {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < carritoList.size(); i++) {
