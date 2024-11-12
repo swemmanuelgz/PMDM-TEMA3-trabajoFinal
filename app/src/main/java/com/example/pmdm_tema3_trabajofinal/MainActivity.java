@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -24,14 +26,19 @@ import com.example.pmdm_tema3_trabajofinal.adapters.ProductAdapter;
 import com.example.pmdm_tema3_trabajofinal.model.Producto;
 import com.example.pmdm_tema3_trabajofinal.repository.ProductRepository;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements ProductAdapter.OnProductSelectedListener {
     //atributos
     private TextView txtResumeOrder ;
-    private TextView txtProductsContador;
-    Dialog dialog;
-    Button btnDialogCancelar, btnDialogConfirmar;
-    ImageButton btnCartShop, btnBuy, btnCart;
+    private TextView txtProductsContador,txtMessage;
+    private Dialog dialog;
+    private Button btnDialogCancelar, btnDialogConfirmar;
+    private ImageButton btnCartShop, btnBuy, btnCart;
+    private ConstraintLayout products;
     int contador = 0;
+    private Double total = 0.0;
+    private ArrayList<Producto> carritoList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,24 +60,28 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(productAdapter);
 
-        //Cogemos el switch y otros elementos
-        txtProductsContador = findViewById(R.id.txtContadorProducts);
-        txtResumeOrder = findViewById(R.id.txtResumeOrder);
-        Switch sw = findViewById(R.id.sw);
-         btnCartShop = findViewById(R.id.btnCartShop);
-         btnBuy = findViewById(R.id.btnBuy);
-         btnCart = findViewById(R.id.btnCart);
-        ConstraintLayout mainLayout= findViewById(R.id.txtProductsCount);
-
+        //layouts
         dialog = new Dialog(MainActivity.this);
         dialog.setContentView(R.layout.dialog_shippment);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(true);
 
+        products = new ConstraintLayout(MainActivity.this);
 
+
+        //Cogemos el switch y otros elementos
+        txtProductsContador = findViewById(R.id.txtContadorProducts);
+        txtResumeOrder = findViewById(R.id.txtResumeOrder);
+
+        Switch sw = findViewById(R.id.sw);
+         btnCartShop = findViewById(R.id.btnCartShop);
+         btnBuy = findViewById(R.id.btnBuy);
+         btnCart = products.findViewById(R.id.btnCart);
+        ConstraintLayout mainLayout= findViewById(R.id.txtProductsCount);
         btnDialogConfirmar = dialog.findViewById(R.id.btnConfirm);
         btnDialogCancelar = dialog.findViewById(R.id.btnCancel);
+
       //Métodos para mla compra
         btnDialogConfirmar.setOnClickListener(v -> {
             Toast.makeText(this, "Compra realizada por " + txtResumeOrder.getText().toString() + "", Toast.LENGTH_SHORT).show();
@@ -82,7 +93,8 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         });
 
         btnBuy.setOnClickListener(v -> {
-
+            txtMessage = dialog.findViewById(R.id.txtMessage);
+            txtMessage.append("\n" + getCarrito());
             dialog.show();
         });
 
@@ -117,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
 
 
     }
+
     //este metodo se llama cuando se selecciona un producto y hace la suma de los precios
     @Override
     public void onProductSelected(Producto producto) {
@@ -127,10 +140,21 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         }
         String precioOrderStr = txtResumeOrder.getText().toString().replace("TOTAL: ","").replace("€","");
         double precioOrder = Double.parseDouble(precioOrderStr); //Pasar de String a double
-        double total = precioOrder + precio;
+         this.total = precioOrder + precio;
         String resumeOrder = String.valueOf(total);
         txtResumeOrder.setText("TOTAL: "+resumeOrder+"€");
         contador++;
         txtProductsContador.setText(String.valueOf(contador));
+        carritoList.add(producto);
+
+    }
+
+    public StringBuilder getCarrito() {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < carritoList.size(); i++) {
+            builder.append("-"+carritoList.get(i).getTitulo()+": "+carritoList.get(i).getPrecio()+"€");
+            builder.append("\n");
+        }
+        return builder;
     }
 }
