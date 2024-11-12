@@ -1,5 +1,6 @@
 package com.example.pmdm_tema3_trabajofinal;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -11,7 +12,6 @@ import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -27,6 +27,8 @@ import com.example.pmdm_tema3_trabajofinal.model.Producto;
 import com.example.pmdm_tema3_trabajofinal.repository.ProductRepository;
 
 import java.util.ArrayList;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class MainActivity extends AppCompatActivity implements ProductAdapter.OnProductSelectedListener {
     //atributos
@@ -68,8 +70,6 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         dialog.setCancelable(true);
 
         products = new ConstraintLayout(MainActivity.this);
-
-
         //Cogemos el switch y otros elementos
         txtProductsContador = findViewById(R.id.txtContadorProducts);
         txtResumeOrder = findViewById(R.id.txtResumeOrder);
@@ -82,8 +82,11 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         btnDialogConfirmar = dialog.findViewById(R.id.btnConfirm);
         btnDialogCancelar = dialog.findViewById(R.id.btnCancel);
 
-      //Métodos para mla compra
+      //Métodos para la compra
         btnDialogConfirmar.setOnClickListener(v -> {
+            new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
+                    .setTitleText("Compra realizada")
+                    .show();
             Toast.makeText(this, "Compra realizada por " + txtResumeOrder.getText().toString() + "", Toast.LENGTH_SHORT).show();
             dialog.dismiss();
         });
@@ -97,7 +100,6 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
             txtMessage.append("\n" + getCarrito());
             dialog.show();
         });
-
 
 
 
@@ -152,8 +154,8 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
     public StringBuilder getCarrito() {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < carritoList.size(); i++) {
-            builder.append("-"+carritoList.get(i).getTitulo()+": "+carritoList.get(i).getPrecio()+"€");
-            builder.append("\n");
+            builder.append("\n"+"-"+carritoList.get(i).getTitulo()+": "+carritoList.get(i).getPrecio()+"€");
+
         }
         return builder;
     }

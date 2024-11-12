@@ -31,10 +31,11 @@ android {
     }
 }
 
-dependencies {
 
+dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
+    implementation("com.github.f0ris.sweetalert:library:1.6.2")
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     testImplementation(libs.junit)

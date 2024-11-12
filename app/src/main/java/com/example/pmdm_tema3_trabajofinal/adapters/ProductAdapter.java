@@ -9,10 +9,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pmdm_tema3_trabajofinal.MainActivity;
 import com.example.pmdm_tema3_trabajofinal.R;
 import com.example.pmdm_tema3_trabajofinal.model.Producto;
 
 import java.util.List;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
     //lista de productos
@@ -70,6 +73,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
         holder.btnCart.setOnClickListener(v ->{
             if (onProductSelectedListener != null) {
                 onProductSelectedListener.onProductSelected(producto);
+
             }
         });
 
