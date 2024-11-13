@@ -1,11 +1,9 @@
 package com.example.pmdm_tema3_trabajofinal;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,7 +14,6 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -65,8 +62,9 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         recyclerView.setAdapter(productAdapter);
 
         //Cogemos el recycler
-        View cartLayout = getLayoutInflater().inflate(R.layout.cart, null);
-        RecyclerView cartRecyclerView = findViewById(R.id.reyclewViewCart);
+        //View cartLayout = getLayoutInflater().inflate(R.layout.cart, null);
+        cart = (ConstraintLayout) getLayoutInflater().inflate(R.layout.cart, null);
+        RecyclerView cartRecyclerView = cart.findViewById(R.id.recyclerViewCart);
         cartRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         cartRecyclerView.setAdapter(new CartAdapter(carritoList));
 
@@ -77,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(true);
 
-        products = new ConstraintLayout(MainActivity.this);
+        products = (ConstraintLayout) getLayoutInflater().inflate(R.layout.cart, null);
         //Cogemos el switch y otros elementos
         txtProductsContador = findViewById(R.id.txtContadorProducts);
         txtResumeOrder = findViewById(R.id.txtResumeOrder);
@@ -138,6 +136,11 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
 
             }
 
+        });
+        //Listener para el carrito
+        btnCartShop.setOnClickListener(v -> {
+            cart.setVisibility(View.VISIBLE);
+            products.setVisibility(View.GONE);
         });
 
 
