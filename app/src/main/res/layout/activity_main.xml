@@ -94,5 +94,8 @@
         app:layout_constraintEnd_toStartOf="@+id/btnCartShop"
         app:layout_constraintStart_toEndOf="@+id/sw"
         app:layout_constraintTop_toTopOf="parent" />
+    <!-- En tu main_activity.xml -->
+  <!--   <include layout="@layout/cart" /> -->
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

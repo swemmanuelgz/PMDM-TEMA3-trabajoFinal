@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
 
         //Cogemos el recycler
         //View cartLayout = getLayoutInflater().inflate(R.layout.cart, null);
+
         cart = (ConstraintLayout) getLayoutInflater().inflate(R.layout.cart, null);
         RecyclerView cartRecyclerView = cart.findViewById(R.id.recyclerViewCart);
         cartRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(true);
 
-        products = (ConstraintLayout) getLayoutInflater().inflate(R.layout.cart, null);
+        products = (ConstraintLayout) getLayoutInflater().inflate(R.layout.product, null);
         //Cogemos el switch y otros elementos
         txtProductsContador = findViewById(R.id.txtContadorProducts);
         txtResumeOrder = findViewById(R.id.txtResumeOrder);
@@ -137,6 +138,8 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
             }
 
         });
+
+
         //Listener para el carrito
         btnCartShop.setOnClickListener(v -> {
             cart.setVisibility(View.VISIBLE);
