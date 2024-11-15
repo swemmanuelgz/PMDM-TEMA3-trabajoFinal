@@ -57,6 +57,7 @@ public class ProductRepository {
                 String descripcion = partes[3];
                 double precio = Double.parseDouble(partes[4]);
                 Producto producto = new Producto(getDrawableByName(fotoName), id, titulo, descripcion, precio);
+                producto.setFotoId(getDrawableByName(fotoName));
                 Log.d("ProductRepository", "Producto: " + producto.getTitulo());
                 productosList.add(producto);
             }

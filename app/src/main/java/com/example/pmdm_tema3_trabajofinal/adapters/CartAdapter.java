@@ -1,5 +1,6 @@
 package com.example.pmdm_tema3_trabajofinal.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
     @Override
     public CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cart, parent, false);
+                .inflate(R.layout.cart_product, parent, false);
         return new CartViewHolder(view);
     }
 
@@ -45,11 +46,18 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
         //Elementos
+        if (carritoList.isEmpty()) {
+            Log.d("CartAdapter", "El carrito esta vacio");
+        }
+
         Producto producto = carritoList.get(position);
+        for (int i = 0; i < carritoList.size(); i++) {
+            Log.d("CartAdapter", "Producto en cesta: " + carritoList.get(position).toString());
+        }
         holder.skbCantidad.setMax(10);
         holder.skbCantidad.setProgress(Integer.parseInt(holder.txtCantidad.getText().toString()));
         holder.imgFoto.setImageResource(producto.getFotoId());
-        holder.txtPrecio.setText(String.valueOf(producto.getPrecio() + "€"));
+        holder.txtPrecio.setText(producto.getPrecio() + "€");
         holder.txtProductName.setText(producto.getTitulo());
         holder.txtCantidad.setText(String.valueOf(holder.skbCantidad.getProgress()));
 

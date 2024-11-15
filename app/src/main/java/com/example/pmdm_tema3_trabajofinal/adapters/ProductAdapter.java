@@ -1,6 +1,7 @@
 package com.example.pmdm_tema3_trabajofinal.adapters;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,6 +74,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
         holder.btnCart.setOnClickListener(v ->{
             if (onProductSelectedListener != null) {
                 onProductSelectedListener.onProductSelected(producto);
+                Log.d("ProductAdapter", "Producto seleccionado: " + producto.toString());
 
             }
         });

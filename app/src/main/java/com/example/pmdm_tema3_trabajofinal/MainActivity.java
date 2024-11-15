@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
     int contador = 0;
     private Double total = 0.0;
     private ArrayList<Producto> carritoList = new ArrayList<>();
+    private RecyclerView cartRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         //View cartLayout = getLayoutInflater().inflate(R.layout.cart, null);
 
         cart = (ConstraintLayout) getLayoutInflater().inflate(R.layout.cart, null);
-        RecyclerView cartRecyclerView = cart.findViewById(R.id.recyclerViewCart);
+         cartRecyclerView = cart.findViewById(R.id.recyclerViewCart);
         cartRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         cartRecyclerView.setAdapter(new CartAdapter(carritoList));
 
@@ -142,11 +144,42 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
 
         //Listener para el carrito
         btnCartShop.setOnClickListener(v -> {
-            cart.setVisibility(View.VISIBLE);
-            products.setVisibility(View.GONE);
+            showCartDialog();
         });
 
 
+    }
+    //Metodo que ensena un dialog del carrito
+    private void showCartDialog() {
+        Dialog cartDialog = new Dialog(MainActivity.this);
+        cartDialog.setContentView(R.layout.cart);
+        cartDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        cartDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        cartDialog.setCancelable(true);
+
+        //configuramos el recyclea
+
+        RecyclerView recyclerViewCartDialog = cartDialog.findViewById(R.id.recyclerViewCart);
+        CartAdapter cartAdapter = new CartAdapter(carritoList);
+        cartAdapter.notifyDataSetChanged();
+        recyclerViewCartDialog.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewCartDialog.setAdapter(cartAdapter);
+
+        Button btnCerrar = cartDialog.findViewById(R.id.btnCerrar);
+        btnCerrar.setOnClickListener(v -> cartDialog.dismiss());
+
+        for (Producto producto : carritoList) {
+            Log.d("MainActivity", "Producto Main: " + producto.getTitulo() + " - " + producto.getPrecio());
+        }
+
+        //Verificamos si el carrito esta vacio
+        if (carritoList.isEmpty()) {
+            Toast.makeText(this, "El carrito está vacío", Toast.LENGTH_SHORT).show();
+            return; // Salir de la función si el carrito está vacío
+        }
+        Toast.makeText(this, "El carrito no está vacío"+carritoList.get(0), Toast.LENGTH_SHORT).show();
+        //Mostramos el dialog
+        cartDialog.show();
     }
 
     //este metodo se llama cuando se selecciona un producto y hace la suma de los precios
