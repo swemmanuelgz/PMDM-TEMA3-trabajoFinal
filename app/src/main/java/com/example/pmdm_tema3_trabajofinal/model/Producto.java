@@ -1,11 +1,19 @@
 package com.example.pmdm_tema3_trabajofinal.model;
 
-public class Producto {
+public class Producto  implements Comparable<Producto> {
+
+    @Override
+    public int compareTo(Producto producto) {
+        //Compara los productos por su titulo
+        return this.getTitulo().compareTo(producto.getTitulo());
+    }
+
     private int id;
     private int fotoId;
     private String titulo;
     private String descripcion;
     private double precio;
+    private int cantidad;
 
 
     public Producto() {
@@ -69,5 +77,9 @@ public class Producto {
                 ", descripcion='" + descripcion + '\'' +
                 ", precio=" + precio +
                 '}';
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 }

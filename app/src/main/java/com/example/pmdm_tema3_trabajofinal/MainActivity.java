@@ -4,10 +4,13 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -42,6 +45,10 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
     private Double total = 0.0;
     private ArrayList<Producto> carritoList = new ArrayList<>();
     private RecyclerView cartRecyclerView;
+    private EditText txtBuscador;
+    private ProductAdapter productAdapter;
+    private ProductRepository productRepository;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +61,10 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
             return insets;
         });
         //Cogemos el repositorio usando el constructor por contexto
-        ProductRepository productRepository = new ProductRepository(this);
-        ProductAdapter productAdapter = new ProductAdapter(productRepository.getProductosList());
+        productRepository = new ProductRepository(this);
+        productAdapter = new ProductAdapter(productRepository.getProductosList());
         productAdapter.setOnProductSelectedListener(this);
+
 
         //Cogemos el recycler
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
@@ -82,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         //Cogemos el switch y otros elementos
         txtProductsContador = findViewById(R.id.txtContadorProducts);
         txtResumeOrder = findViewById(R.id.txtResumeOrder);
+        txtBuscador = findViewById(R.id.txtBuscador);
 
         Switch sw = findViewById(R.id.sw);
          btnCartShop = findViewById(R.id.btnCartShop);
@@ -126,6 +135,8 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
                 btnCartShop.setBackgroundColor(Color.BLACK);
                 txtProductsContador.setTextColor(Color.WHITE);
                 sw.setButtonDrawable(productRepository.getDrawableByName("sol"));
+                txtBuscador.setHintTextColor(Color.WHITE);
+                txtBuscador.setTextColor(Color.WHITE);
 
 
             } else {
@@ -136,9 +147,30 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
                 btnCartShop.setBackgroundColor(Color.WHITE);
                 txtProductsContador.setTextColor(Color.BLACK);
                 sw.setButtonDrawable(productRepository.getDrawableByName("luna"));
+                txtBuscador.setHintTextColor(Color.BLACK);
+                txtBuscador.setTextColor(Color.BLACK);
 
             }
 
+        });
+        //Listener para el buscador
+        txtBuscador.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+
+            }
+            //Este metodo se utiliza cuando el texto cambia
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                //Cogemos el texto
+                String query = charSequence.toString().toLowerCase().trim();
+                filterProducts(query);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
         });
 
 
@@ -149,6 +181,18 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
 
 
     }
+
+    private void filterProducts(String query) {
+        ArrayList<Producto> filteredList = new ArrayList<>();
+        //Recorre todos los productos
+        for (Producto producto : productRepository.getProductosList()) {
+            if (producto.getTitulo().toLowerCase().contains(query)) {
+                filteredList.add(producto);
+            }
+        }
+        productAdapter.updateProductList(filteredList);
+    }
+
     //Metodo que ensena un dialog del carrito
     private void showCartDialog() {
         Dialog cartDialog = new Dialog(MainActivity.this);

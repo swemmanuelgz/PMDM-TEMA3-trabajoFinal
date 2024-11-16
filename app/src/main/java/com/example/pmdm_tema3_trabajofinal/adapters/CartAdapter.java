@@ -80,7 +80,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
         int cantidad = cantidades.get(position);
 
         for (int i = 0; i < carritoList.size(); i++) {
-            Log.d("CartAdapter", "Producto en cesta: " + carritoList.get(position).toString());
+            Log.d("CartAdapter", "Tamañom del carritoList: " + carritoList.size());
+            Log.d("CartAdapter", "Tamaño de cantidades: " + cantidades.size());
         }
         holder.skbCantidad.setMax(10);
         holder.skbCantidad.setProgress(cantidad);
@@ -88,15 +89,28 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
         holder.txtPrecio.setText(producto.getPrecio() + "€");
         holder.txtProductName.setText(producto.getTitulo());
         holder.txtCantidad.setText(String.valueOf(holder.skbCantidad.getProgress()));
-
+        //listener para eliminar el producto
+        holder.btnDelete.setOnClickListener(v -> {
+            if (onProductSelectedListener != null) {
+                onProductSelectedListener.onProductSelected(producto);
+                carritoList.remove(producto);
+                Log.d("CartAdapter", "Producto eliminado: " + producto.toString());
+            }
+        });
         //listener para actualizar el textView de la cantidad
         holder.skbCantidad.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (fromUser) {
                     holder.txtCantidad.setText(String.valueOf(progress));
-                    cantidades.set(position, progress);
-                    Log.d("CartAdapter", "Cantidad: " + progress);}
+                    int adapterPosition = holder.getAdapterPosition();
+                    if (adapterPosition != RecyclerView.NO_POSITION && adapterPosition < carritoList.size()) {
+                        cantidades.set(adapterPosition, progress);
+                        Log.d("CartAdapter", "Cantidad Actualizada: " + progress);
+                    }else {
+                        Log.d("CartAdapter", "Error al actualizar la cantidad");
+                    }
+
+
             }
 
             @Override
@@ -106,8 +120,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
             //metodo para actualizar la cantidad cuando se suelta el seekbar
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                cantidades.set(position, seekBar.getProgress());
-                Log.d("CartAdapter", "Cantidad Actualizada: " + seekBar.getProgress());
+                int adapterPosition = holder.getAdapterPosition();
+
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    notifyItemChanged(adapterPosition);
+                }
             }
         });
     }

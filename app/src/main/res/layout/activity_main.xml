@@ -94,6 +94,22 @@
         app:layout_constraintEnd_toStartOf="@+id/btnCartShop"
         app:layout_constraintStart_toEndOf="@+id/sw"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/txtBuscador"
+        android:layout_width="174dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="41dp"
+        android:layout_marginBottom="13dp"
+        android:ems="10"
+        android:hint="Buscar"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintEnd_toStartOf="@+id/txtContadorProducts"
+        app:layout_constraintStart_toEndOf="@+id/sw"
+        app:layout_constraintTop_toTopOf="parent" />
     <!-- En tu main_activity.xml -->
   <!--   <include layout="@layout/cart" /> -->
 

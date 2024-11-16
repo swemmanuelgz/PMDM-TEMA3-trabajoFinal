@@ -14,6 +14,7 @@ import com.example.pmdm_tema3_trabajofinal.MainActivity;
 import com.example.pmdm_tema3_trabajofinal.R;
 import com.example.pmdm_tema3_trabajofinal.model.Producto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -27,6 +28,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
     public ProductAdapter(List<Producto> productoList) {
         this.productoList = productoList;
     }
+
+
 
     @NonNull
     @Override
@@ -84,6 +87,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
     @Override
     public int getItemCount() {
         return productoList.size();
+    }
+
+    public void updateProductList(ArrayList<Producto> filteredList) {
+        this.productoList = filteredList;
+        notifyDataSetChanged();
     }
 
     public interface OnProductSelectedListener {
