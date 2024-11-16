@@ -35,7 +35,9 @@
                 android:id="@+id/txtProductName"
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
-                android:text="ProductName" />
+                android:text="ProductName"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <SeekBar
                 android:id="@+id/skbCantidad"
@@ -60,7 +62,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="2" />
+                android:text="2"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtCantidad"
@@ -69,6 +73,8 @@
                 android:gravity="right"
                 android:paddingRight="40dp"
                 android:text="3"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 tools:layout_editor_absoluteX="-200dp"
                 tools:layout_editor_absoluteY="462dp" />
 
@@ -78,7 +84,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="#FB0000"
-                android:text="Borrar" />
+                android:text="Borrar"
+                android:textStyle="bold" />
         </LinearLayout>
 
     </LinearLayout>
