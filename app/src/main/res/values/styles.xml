@@ -15,4 +15,5 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@android:color/black</item>
     </style>
+    <style name="Theme.PMDMTEMA3trabajoFinal" parent="Base.Theme.PMDMTEMA3trabajoFinal" />
 </resources>

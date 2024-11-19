@@ -1,6 +1,19 @@
 iphone16/1/IPhone 16 pro max/El nuevo iPhone 16 pro max , con triple cámara y 6,9 pulgadas/1469.00
-pixel9/10/Pixel 9 Pro/El nuevo Pixel 9 Pro, con cámara de última generación y pantalla de 6,7 pulgadas/1299.00
-airpodspro2/11/AirPods Pro 2/Los nuevos AirPods Pro 2 con cancelación de ruido mejorada y mayor duración de batería/249.99
-macbook2022/12/MacBook 2022/El MacBook 2022 con chip M2, pantalla Retina de 13,3 pulgadas y un rendimiento superior/1499.00
-rtx4070/13/RTX 4070/La nueva tarjeta gráfica RTX 4070 con trazado de rayos y DLSS 3 para un rendimiento excepcional en juegos/599.99
-s24ultra/14/Samsung S24 Ultra/El Samsung Galaxy S24 Ultra con cámara de 200 MP, pantalla AMOLED de 6,8 pulgadas y batería de larga duración/1199.00
+pixel9/2/Pixel 9 Pro/El nuevo Pixel 9 Pro, con cámara de última generación y pantalla de 6,7 pulgadas/1299.00
+airpodspro2/3/AirPods Pro 2/Los nuevos AirPods Pro 2 con cancelación de ruido mejorada y mayor duración de batería/249.99
+macbook2022/4/MacBook 2022/El MacBook 2022 con chip M2, pantalla Retina de 13,3 pulgadas y un rendimiento superior/1499.00
+rtx4070/5/RTX 4070/La nueva tarjeta gráfica RTX 4070 con trazado de rayos y DLSS 3 para un rendimiento excepcional en juegos/599.99
+s24ultra/6/Samsung S24 Ultra/El Samsung Galaxy S24 Ultra con cámara de 200 MP, pantalla AMOLED de 6,8 pulgadas y batería de larga duración/1199.00
+gta5ps5/7/gta v para ps5/La versión definitiva del popular juego Grand Theft Auto V, optimizada para la consola PlayStation 5 con gráficos mejorados y tiempos de carga más rápidos./39.99
+metaquest3/8/meta quest 3/El visor de realidad virtual Meta Quest 3, con resolución 4K y experiencias inmersivas./499.99
+applevisionpro/9/apple vision pro/Las gafas de realidad mixta de Apple con tecnología avanzada y diseño premium./3499.00
+xboxseriesx/10/xbox series x/La consola de última generación de Microsoft, con gráficos 4K y velocidades ultrarrápidas./499.99
+wwe2k25/11/wwe 2k25/El videojuego oficial de WWE con modos mejorados y los luchadores más icónicos./59.99
+airpodsmax/12/airpods max/Los audífonos inalámbricos de Apple con audio espacial y cancelación de ruido./549.99
+nintendoswitch/13/nintendo switch/La consola híbrida de Nintendo con juegos exclusivos y modo portátil./299.99
+ps5pro/14/ps5 pro/La PlayStation 5 Pro, con mayor potencia y gráficos mejorados para la nueva generación./499.99
+asusrog15gaming/15/asus rog g15 gaming/La laptop gaming de Asus con pantalla de 15 pulgadas y rendimiento sobresaliente./1499.00
+ipadpro2022/16/ipad pro 2022/El iPad Pro 2022 con chip M2 y pantalla Liquid Retina XDR de 12,9 pulgadas./1099.00
+intelcorei99900x/17/intel core i9-9900x/Procesador Intel Core i9 de alta gama para rendimiento extremo en aplicaciones y juegos./499.99
+applewatchultra2/18/apple watch ultra 2/El Apple Watch Ultra 2 con diseño resistente y nuevas funciones de salud y actividad física./799.99
+lg8kqned/19/lg 8k qned/Televisor LG QNED con resolución 8K y colores vivos gracias a la tecnología Quantum Dot./1999.00

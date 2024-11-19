@@ -9,4 +9,12 @@
     <color name="button_pressed_color">#FFDDDDDD</color> <!-- Color al hacer clic -->
     <color name="button_focused_color">#FFBBBBBB</color> <!-- Color al mantener -->
     <color name="button_default_color">#FFFFFFFF</color> <!-- Color normal -->
+
+    <!-- Tema Oscuro-->
+    <color name="my_dark_primary">#BB86FC</color>
+    <color name="my_dark_on_primary">#000000</color>
+    <color name="my_dark_background">#121212</color>
+    <color name="my_dark_on_background">#FFFFFF</color>
+    <color name="my_dark_surface">#121212</color>
+    <color name="my_dark_on_surface">#FFFFFF</color>
 </resources>

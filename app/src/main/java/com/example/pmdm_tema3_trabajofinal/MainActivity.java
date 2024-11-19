@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
 
 
     }
-
+    //Filtramos los productos segun lo que introducamos en el buscador
     private void filterProducts(String query) {
         ArrayList<Producto> filteredList = new ArrayList<>();
         //Recorre todos los productos
@@ -246,7 +246,9 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         String precioOrderStr = txtResumeOrder.getText().toString().replace("TOTAL: ","").replace("€","");
         double precioOrder = Double.parseDouble(precioOrderStr); //Pasar de String a double
          this.total = precioOrder + precio;
-        String resumeOrder = String.valueOf(total);
+         //Redondeamos a dos decimales con el Round
+        this.total = Math.round(total * 100.0) / 100.0;
+        String resumeOrder = String.valueOf(this.total);
         txtResumeOrder.setText("TOTAL: "+resumeOrder+"€");
         contador++;
         txtProductsContador.setText(String.valueOf(contador));
