@@ -226,10 +226,10 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
 
         //Verificamos si el carrito esta vacio
         if (carritoList.isEmpty()) {
-            Toast.makeText(this, "El carrito está vacío", Toast.LENGTH_SHORT).show();
+           Toast.makeText(this, "El carrito está vacío", Toast.LENGTH_SHORT).show();
             return; // Salir de la función si el carrito está vacío
         }
-        Toast.makeText(this, "El carrito no está vacío"+carritoList.get(0), Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "El carrito no está vacío"+carritoList.get(0), Toast.LENGTH_SHORT).show();
         //Mostramos el dialog
         cartDialog.show();
     }

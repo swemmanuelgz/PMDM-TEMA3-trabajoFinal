@@ -2,11 +2,6 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.PMDMTEMA3trabajoFinal" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <item name="colorPrimary" tools:targetApi="night">@color/my_dark_primary</item>
-        <item name="colorOnPrimary" tools:targetApi="night">@color/my_dark_on_primary</item>
-        <item name="colorBackground" tools:targetApi="night">@color/my_dark_background</item>
-        <item name="colorOnBackground" tools:targetApi="night">@color/my_dark_on_background</item>
-        <item name="colorSurface" tools:targetApi="night">@color/my_dark_surface</item>
-        <item name="colorOnSurface" tools:targetApi="night">@color/my_dark_on_surface</item>
+
     </style>
 </resources>
