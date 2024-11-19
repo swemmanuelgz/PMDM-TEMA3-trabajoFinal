@@ -178,6 +178,11 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         btnCartShop.setOnClickListener(v -> {
             showCartDialog();
         });
+        //Listener para borrar el carrito con una pulsacion de 2 segundos
+        btnCartShop.setOnLongClickListener(v -> {
+            vaciarCarrito();
+            return true;
+        });
 
 
     }
@@ -189,6 +194,9 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
             if (producto.getTitulo().toLowerCase().contains(query)) {
                 filteredList.add(producto);
             }
+        }
+        if (filteredList.isEmpty()) {
+            Toast.makeText(MainActivity.this, "No se encontraron productos", Toast.LENGTH_SHORT).show();
         }
         productAdapter.updateProductList(filteredList);
     }
@@ -244,6 +252,17 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         txtProductsContador.setText(String.valueOf(contador));
         carritoList.add(producto);
 
+    }
+    //Metodo que restablece el carrito
+    private void vaciarCarrito() {
+        carritoList.clear();
+        txtResumeOrder.setText("TOTAL: 0.0€");
+        contador = 0;
+        txtProductsContador.setText(String.valueOf(contador));
+        //Modificamos el adaptador tambien
+        cartRecyclerView.getAdapter().notifyDataSetChanged();
+        //Toas informativo de que se ha vaciado el carrito
+        Toast.makeText(this, "Carrito vaciado", Toast.LENGTH_SHORT).show();
     }
 //Es el metodo que pasa a texto los nombres de los productos en el carrito
     public StringBuilder getCarrito() {

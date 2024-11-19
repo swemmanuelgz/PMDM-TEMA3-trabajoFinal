@@ -68,6 +68,7 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="6dp"
         android:layout_marginBottom="7dp"
+        android:foregroundGravity="center_vertical"
         android:gravity="center"
         android:shadowColor="#FDB2B2"
         android:textColor="#FF5722"
