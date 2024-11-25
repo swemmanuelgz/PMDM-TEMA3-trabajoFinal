@@ -257,6 +257,11 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
     }
     //Metodo que restablece el carrito
     private void vaciarCarrito() {
+        if (carritoList.isEmpty()) {
+            Toast.makeText(this, "El carrito ya está vacio", Toast.LENGTH_SHORT).show();
+            return;
+
+        }
         carritoList.clear();
         txtResumeOrder.setText("TOTAL: 0.0€");
         contador = 0;
