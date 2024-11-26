@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">PMDM-TEMA3-trabajoFinal</string>
+    <string name="buscar">Buscar</string>
+    <string name="_0">0</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="desea_realizar_la_compra">¿Desea realizar la compra?</string>
+    <string name="confirmar_compra">Confirmar compra</string>
 </resources>
