@@ -23,6 +23,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
     private ArrayList<Integer> cantidades = new ArrayList<>();
     private boolean darkMode;
     private onProductSelectedListener onProductSelectedListener;
+    private OnProductDeleteListener deleteListener;
 
     public CartAdapter(ArrayList<Producto> carritoList) {
 
@@ -91,11 +92,27 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
         holder.txtCantidad.setText(String.valueOf(holder.skbCantidad.getProgress()));
         //listener para eliminar el producto
         holder.btnDelete.setOnClickListener(v -> {
-            if (onProductSelectedListener != null) {
-                onProductSelectedListener.onProductSelected(producto);
-                carritoList.remove(producto);
-                Log.d("CartAdapter", "Producto eliminado: " + producto.toString());
+
+            try {
+                int position2 = holder.getAdapterPosition();
+                if (position2 != RecyclerView.NO_POSITION) {
+                    Producto productoBorrar = uniqueProducts.get(position2);
+                    //eliminar el producto y su cantidad
+                    uniqueProducts.remove(position2);
+                    cantidades.remove(position2);
+                    //cantidades.remove(holder.skbCantidad.getProgress());
+                    if (deleteListener != null) {
+                        deleteListener.onProductDeleted(productoBorrar);
+                    }
+                    //Notificamos el cambio
+                    notifyItemRemoved(holder.getAdapterPosition());
+                    Log.d("CartAdapter", "Producto eliminado: " + producto.toString());
+                }
+
+            } catch (Exception e) {
+                throw new RuntimeException("Error al eliminar el producto", e);
             }
+
         });
         //listener para actualizar el textView de la cantidad
         holder.skbCantidad.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -135,5 +152,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
     }
     public interface onProductSelectedListener {
         void onProductSelected(Producto producto);
+    }
+    // Añade un listener para comunicar la eliminación
+    public interface OnProductDeleteListener {
+        void onProductDeleted(Producto producto);
+    }
+
+
+    // Método para establecer el listener
+    public void setOnProductDeleteListener(OnProductDeleteListener listener) {
+        this.deleteListener = listener;
     }
 }

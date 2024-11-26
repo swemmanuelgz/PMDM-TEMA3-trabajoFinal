@@ -30,6 +30,9 @@ import com.example.pmdm_tema3_trabajofinal.model.Producto;
 import com.example.pmdm_tema3_trabajofinal.repository.ProductRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
     private EditText txtBuscador;
     private ProductAdapter productAdapter;
     private ProductRepository productRepository;
+    private CartAdapter cartAdapter;
 
 
     @Override
@@ -73,12 +77,13 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
 
         //Cogemos el recycler
         //View cartLayout = getLayoutInflater().inflate(R.layout.cart, null);
-
+        cartAdapter = new CartAdapter(carritoList);
         cart = (ConstraintLayout) getLayoutInflater().inflate(R.layout.cart, null);
          cartRecyclerView = cart.findViewById(R.id.recyclerViewCart);
         cartRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        cartRecyclerView.setAdapter(new CartAdapter(carritoList));
+        cartRecyclerView.setAdapter(cartAdapter);
 
+        Toast.makeText(this, "Hay " + productRepository.getProductosList().size() + " productos en tienda", Toast.LENGTH_SHORT).show();
         //layouts
         dialog = new Dialog(MainActivity.this);
         dialog.setContentView(R.layout.dialog_shippment);
@@ -118,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         //Añade al mensaje los productos que hay en el carrito
         btnBuy.setOnClickListener(v -> {
             txtMessage = dialog.findViewById(R.id.txtMessage);
+            txtMessage.setText("");
             txtMessage.append("\n" + getCarrito());
             dialog.show();
         });
@@ -212,14 +218,29 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         //configuramos el recyclea
 
         RecyclerView recyclerViewCartDialog = cartDialog.findViewById(R.id.recyclerViewCart);
+
         CartAdapter cartAdapter = new CartAdapter(carritoList);
+
         cartAdapter.notifyDataSetChanged();
         recyclerViewCartDialog.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewCartDialog.setAdapter(cartAdapter);
 
+        //Listener por si se elimina un producto
+        cartAdapter.setOnProductDeleteListener(new CartAdapter.OnProductDeleteListener() {
+            @Override
+            public void onProductDeleted(Producto producto) {
+                carritoList.remove(producto);
+                cartAdapter.notifyDataSetChanged();
+                actualizarCarritoYContador();
+                cartDialog.dismiss();
+                showCartDialog();
+            }
+        });
+
         Button btnCerrar = cartDialog.findViewById(R.id.btnCerrar);
         btnCerrar.setOnClickListener(v -> cartDialog.dismiss());
 
+        //Recorremos el carrito y mostramos los productos en el LOG
         for (Producto producto : carritoList) {
             Log.d("MainActivity", "Producto Main: " + producto.getTitulo() + " - " + producto.getPrecio());
         }
@@ -229,7 +250,6 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
            Toast.makeText(this, "El carrito está vacío", Toast.LENGTH_SHORT).show();
             return; // Salir de la función si el carrito está vacío
         }
-       // Toast.makeText(this, "El carrito no está vacío"+carritoList.get(0), Toast.LENGTH_SHORT).show();
         //Mostramos el dialog
         cartDialog.show();
     }
@@ -254,8 +274,21 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         txtProductsContador.setText(String.valueOf(contador));
         carritoList.add(producto);
 
+        cartAdapter.notifyDataSetChanged();
+
     }
-    //Metodo que restablece el carrito
+    //Metodo que restablece el carrito y el total
+    private void actualizarCarritoYContador() {
+        total = carritoList.stream()
+                .mapToDouble(Producto::getPrecio)
+                .sum();
+        total = Math.round(total * 100.0) / 100.0;
+        //Actualizamos su respectivo textView
+        txtResumeOrder.setText("TOTAL: " + total + "€");
+        //Actualizamos el contador
+        contador = carritoList.size();
+        txtProductsContador.setText(String.valueOf(contador));
+    }
     private void vaciarCarrito() {
         if (carritoList.isEmpty()) {
             Toast.makeText(this, "El carrito ya está vacio", Toast.LENGTH_SHORT).show();
@@ -267,17 +300,30 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         contador = 0;
         txtProductsContador.setText(String.valueOf(contador));
         //Modificamos el adaptador tambien
-        cartRecyclerView.getAdapter().notifyDataSetChanged();
+        cartAdapter.notifyDataSetChanged();
         //Toas informativo de que se ha vaciado el carrito
         Toast.makeText(this, "Carrito vaciado", Toast.LENGTH_SHORT).show();
     }
 //Es el metodo que pasa a texto los nombres de los productos en el carrito
     public StringBuilder getCarrito() {
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < carritoList.size(); i++) {
+        //Un hasmpap para recorrer el carrito
+        HashMap<Producto, Integer> mapProductos = new HashMap<>();
+        //Recorremos el carrito para saber cuantos productos tenemos
+        for (Producto producto : carritoList) {
+            mapProductos.put(producto, mapProductos.getOrDefault(producto, 0) + 1);
+        }
+        //Recorremos el hashmap para construir el texto
+        for (Map.Entry<Producto, Integer> entry : mapProductos.entrySet()) {
+            Producto producto = entry.getKey();
+            int cantidad = entry.getValue();
+            builder.append("\n" + producto.getTitulo() + " X" + cantidad + " Uds");
+        }
+
+       /* for (int i = 0; i < carritoList.size(); i++) {
             builder.append("\n"+"-"+carritoList.get(i).getTitulo()+": "+carritoList.get(i).getPrecio()+"€");
 
-        }
+        }*/
         return builder;
     }
 }
