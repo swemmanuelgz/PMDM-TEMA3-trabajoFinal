@@ -114,7 +114,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
             }
 
         });
-        //listener para actualizar el textView de la cantidad
+        //listener para actualizar el textView de la cantidad HAY QUE ARREGLAR
         holder.skbCantidad.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

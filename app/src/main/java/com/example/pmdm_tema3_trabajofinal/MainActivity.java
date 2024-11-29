@@ -291,7 +291,10 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
     }
     private void vaciarCarrito() {
         if (carritoList.isEmpty()) {
-            Toast.makeText(this, "El carrito ya está vacio", Toast.LENGTH_SHORT).show();
+            //mostramos la alerta
+            new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
+                    .setTitleText("El carrito está vacio")
+                    .show();
             return;
 
         }
