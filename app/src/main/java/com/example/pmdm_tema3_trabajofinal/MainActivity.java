@@ -111,6 +111,8 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
                     .setTitleText("Compra realizada por: "+total.toString()+"€")
                     .show();
             Toast.makeText(this, "Compra realizada por " + txtResumeOrder.getText().toString() + "", Toast.LENGTH_SHORT).show();
+            //Vacia el carrito
+            vaciarCarrito();
             dialog.dismiss();
         });
         btnDialogCancelar.setOnClickListener(v -> {
@@ -122,6 +124,14 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         });
         //Añade al mensaje los productos que hay en el carrito
         btnBuy.setOnClickListener(v -> {
+            //Por si el carrito está vacio
+            if (carritoList.isEmpty()) {
+                new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("El carrito está vacio")
+                        .show();
+                return;
+            }
+
             txtMessage = dialog.findViewById(R.id.txtMessage);
             txtMessage.setText("");
             txtMessage.append("\n" + getCarrito());
