@@ -1,5 +1,6 @@
 package com.example.pmdm_tema3_trabajofinal.adapters;
 
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,6 +89,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
         holder.skbCantidad.setProgress(cantidad);
         holder.imgFoto.setImageResource(producto.getFotoId());
         holder.txtPrecio.setText(producto.getPrecio() + "€");
+        //Si hay oferta actualizamos el precio
+        if (producto.getPrecioOferta() != 0) {
+
+            producto.setPrecio(producto.getPrecioOferta());
+            holder.txtPrecio.setText(producto.getPrecioOferta() + "€");
+        }
         holder.txtProductName.setText(producto.getTitulo());
         holder.txtCantidad.setText(String.valueOf(holder.skbCantidad.getProgress()));
         //listener para eliminar el producto

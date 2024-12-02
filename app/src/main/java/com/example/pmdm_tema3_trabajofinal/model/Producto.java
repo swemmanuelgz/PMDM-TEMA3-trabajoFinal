@@ -13,7 +13,9 @@ public class Producto  implements Comparable<Producto> {
     private String titulo;
     private String descripcion;
     private double precio;
+    private double precioOferta;
     private int cantidad;
+
 
 
     public Producto() {
@@ -26,6 +28,13 @@ public class Producto  implements Comparable<Producto> {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.precio = precio;
+    }
+    public double getPrecioOferta() {
+        return precioOferta;
+    }
+
+    public void setPrecioOferta(double precioOferta) {
+        this.precioOferta = precioOferta;
     }
 
     public int getId() {

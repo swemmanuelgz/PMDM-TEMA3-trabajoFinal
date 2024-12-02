@@ -270,6 +270,10 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         //Coge el precio del producto seleccionado y lo suma al total y parsea los datos de nuevo para
         //Que no hayan errores de conversion
         double precio = producto.getPrecio();
+        //Si el precio de oferta es diferente de 0, se usa el precio de oferta
+        if (producto.getPrecioOferta() != 0) {
+            precio = producto.getPrecioOferta();
+        }
         if (txtResumeOrder.getText().toString().isEmpty()) {
             txtResumeOrder.setText("TOTAL: 0.0€");
         }
