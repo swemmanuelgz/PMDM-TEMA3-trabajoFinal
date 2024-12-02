@@ -277,6 +277,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         if (txtResumeOrder.getText().toString().isEmpty()) {
             txtResumeOrder.setText("TOTAL: 0.0€");
         }
+
         String precioOrderStr = txtResumeOrder.getText().toString().replace("TOTAL: ","").replace("€","");
         double precioOrder = Double.parseDouble(precioOrderStr); //Pasar de String a double
          this.total = precioOrder + precio;
