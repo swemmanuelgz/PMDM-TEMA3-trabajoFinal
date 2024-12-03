@@ -9,11 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pmdm_tema3_trabajofinal.R;
+import com.google.android.material.tabs.TabLayout;
 
 public class ProductViewHolder extends RecyclerView.ViewHolder {
     ImageView imgFoto;
     TextView txtId, txtTitulo, txtDescripcion, txtPrecio,txtMessage,txtOferta;
     ImageButton btnCart;
+
 
     public ProductViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -25,5 +27,6 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
         btnCart = itemView.findViewById(R.id.btnCart);
         txtMessage = itemView.findViewById(R.id.txtMessage);
         txtOferta = itemView.findViewById(R.id.txt_oferta);
+
     }
 }

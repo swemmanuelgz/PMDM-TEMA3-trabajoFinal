@@ -84,6 +84,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
             holder.txtId.setTextColor(Color.WHITE);
             holder.btnCart.setBackgroundColor(Color.BLACK);
 
+
         }else {
             holder.txtTitulo.setTextColor(Color.BLACK);
             holder.txtDescripcion.setTextColor(Color.BLACK);
@@ -91,6 +92,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
             holder.txtOferta.setTextColor(Color.BLACK);
             holder.txtId.setTextColor(Color.BLACK);
             holder.btnCart.setBackgroundColor(Color.WHITE);
+
         }
 
         //listener que detecta que producto es seleccionado

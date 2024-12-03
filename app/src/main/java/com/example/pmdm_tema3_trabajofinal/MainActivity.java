@@ -28,6 +28,8 @@ import com.example.pmdm_tema3_trabajofinal.adapters.CartAdapter;
 import com.example.pmdm_tema3_trabajofinal.adapters.ProductAdapter;
 import com.example.pmdm_tema3_trabajofinal.model.Producto;
 import com.example.pmdm_tema3_trabajofinal.repository.ProductRepository;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
     private ProductAdapter productAdapter;
     private ProductRepository productRepository;
     private CartAdapter cartAdapter;
+    private TabLayout tabLayout;
 
 
     @Override
@@ -90,6 +93,8 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(true);
+        //TabLayout
+        tabLayout = findViewById(R.id.tabLayout);
 
         products = (ConstraintLayout) getLayoutInflater().inflate(R.layout.product, null);
         //Cogemos el switch y otros elementos
@@ -110,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
             new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
                     .setTitleText("Compra realizada por: "+total.toString()+"€")
                     .show();
-            Toast.makeText(this, "Compra realizada por " + txtResumeOrder.getText().toString() + "", Toast.LENGTH_SHORT).show();
+            Snackbar.make(cart, "Compra realizada por: "+total.toString()+"€", Snackbar.LENGTH_SHORT).show();
             //Vacia el carrito
             vaciarCarrito();
             dialog.dismiss();
@@ -119,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
             new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
                     .setTitleText("Compra cancelada")
                     .show();
-            Toast.makeText(this, "Compra cancelada", Toast.LENGTH_SHORT).show();
+            Snackbar.make(cart, "Compra cancelada", Snackbar.LENGTH_SHORT).show();
             dialog.dismiss();
         });
         //Añade al mensaje los productos que hay en el carrito
@@ -153,6 +158,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
                 sw.setButtonDrawable(productRepository.getDrawableByName("sol"));
                 txtBuscador.setHintTextColor(Color.WHITE);
                 txtBuscador.setTextColor(Color.WHITE);
+                tabLayout.setBackgroundColor(Color.BLACK);
 
 
             } else {
@@ -165,11 +171,13 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
                 sw.setButtonDrawable(productRepository.getDrawableByName("luna"));
                 txtBuscador.setHintTextColor(Color.BLACK);
                 txtBuscador.setTextColor(Color.BLACK);
+                tabLayout.setBackgroundColor(Color.WHITE);
 
             }
 
         });
         //Listener para el buscador
+        //Este es un listener nuevo que detecta cuando el texto cambia
         txtBuscador.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
@@ -199,9 +207,29 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
             vaciarCarrito();
             return true;
         });
+        //listener para el tablayout
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                //Mostramos el toast de "proximanete"
+                Toast.makeText(MainActivity.this, "Proximanete", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                //Cuando de se desselecciona
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                //Cuando se vuelve seleccionar
+            }
+        });
 
     }
+
+
     //Filtramos los productos segun lo que introducamos en el buscador
     private void filterProducts(String query) {
         ArrayList<Producto> filteredList = new ArrayList<>();
