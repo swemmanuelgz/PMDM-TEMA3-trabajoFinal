@@ -124,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
             new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
                     .setTitleText("Compra cancelada")
                     .show();
+            //Snackbatr
             Snackbar.make(cart, "Compra cancelada", Snackbar.LENGTH_SHORT).show();
             dialog.dismiss();
         });
