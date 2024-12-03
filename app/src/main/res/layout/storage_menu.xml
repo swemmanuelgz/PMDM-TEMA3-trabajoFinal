@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintStorage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#89FF5722">
+
+    <ImageView
+        android:id="@+id/productImage"
+        android:layout_width="170dp"
+        android:layout_height="175dp"
+        android:layout_marginStart="126dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginEnd="124dp"
+        android:layout_marginBottom="19dp"
+        app:layout_constraintBottom_toTopOf="@+id/txtProductoName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/txtProductoName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="169dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="166dp"
+        android:layout_marginBottom="56dp"
+        android:text="TextView"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btn512"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/productImage" />
+
+    <Button
+        android:id="@+id/btn256"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="41dp"
+        android:layout_marginTop="112dp"
+        android:layout_marginEnd="33dp"
+        android:layout_marginBottom="104dp"
+        android:background="#FF5722"
+        android:backgroundTint="#FF5722"
+        android:text="256GB"
+        android:textColorLink="#FF5722"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn512"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/productImage"
+        app:rippleColor="#FF5722" />
+
+    <Button
+        android:id="@+id/btn1tb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="327dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="104dp"
+        android:background="#FF5722"
+        android:backgroundTint="#FF5722"
+        android:text="1TB"
+        android:textColorLink="#FF5722"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn512"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rippleColor="#FF5722" />
+
+    <Button
+        android:id="@+id/btn512"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="42dp"
+        android:background="#FF5722"
+        android:backgroundTint="#FF5722"
+        android:text="512GB"
+        android:textColorLink="#FF5722"
+        app:layout_constraintStart_toEndOf="@+id/btn256"
+        app:layout_constraintTop_toBottomOf="@+id/txtProductoName"
+        app:rippleColor="#FF5722" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</androidx.constraintlayout.widget.ConstraintLayout>

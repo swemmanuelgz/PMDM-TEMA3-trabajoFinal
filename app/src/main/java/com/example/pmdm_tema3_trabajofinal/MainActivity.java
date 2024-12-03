@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
     private TextView txtResumeOrder ;
     private TextView txtProductsContador,txtMessage;
     private Dialog dialog;
-    private Button btnDialogCancelar, btnDialogConfirmar;
+    private Button btnDialogCancelar, btnDialogConfirmar,btn256,btn512,btn1tb;
     private ImageButton btnCartShop, btnBuy, btnCart;
     private ConstraintLayout products,cart;
     int contador = 0;
@@ -55,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
     private ProductRepository productRepository;
     private CartAdapter cartAdapter;
     private TabLayout tabLayout;
+    private int storage=0;
+    private Boolean storageBolean = true;
 
 
     @Override
@@ -93,6 +96,8 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(true);
+        //Dialog Storage
+
         //TabLayout
         tabLayout = findViewById(R.id.tabLayout);
 
@@ -115,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
             new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
                     .setTitleText("Compra realizada por: "+total.toString()+"€")
                     .show();
-            Snackbar.make(cart, "Compra realizada por: "+total.toString()+"€", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(findViewById(android.R.id.content), "Compra realizada por: " + total.toString() + "€", Snackbar.LENGTH_SHORT).show();
             //Vacia el carrito
             vaciarCarrito();
             dialog.dismiss();
@@ -125,7 +130,8 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
                     .setTitleText("Compra cancelada")
                     .show();
             //Snackbatr
-            Snackbar.make(cart, "Compra cancelada", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(findViewById(android.R.id.content), "Compra cancelada ", Snackbar.LENGTH_SHORT).show();
+
             dialog.dismiss();
         });
         //Añade al mensaje los productos que hay en el carrito
@@ -320,6 +326,49 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
 
         cartAdapter.notifyDataSetChanged();
 
+    }
+    @Override
+    public Boolean showCartStorage(Producto producto) {
+        //Reiniciamos el boolean
+        storageBolean = true;
+
+        Dialog cartDialog = new Dialog(MainActivity.this);
+        cartDialog.setContentView(R.layout.storage_menu);
+        cartDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        cartDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        cartDialog.setCancelable(true);
+        //Configuramos la foto
+        ImageView imgFoto = cartDialog.findViewById(R.id.productImage);
+        imgFoto.setImageResource(producto.getFotoId());
+
+        btn256 = cartDialog.findViewById(R.id.btn256);
+        btn512 = cartDialog.findViewById(R.id.btn512);
+        btn1tb = cartDialog.findViewById(R.id.btn1tb);
+
+        //Se setea el almacenamiento
+
+        btn256.setOnClickListener(v -> {
+            storage = 256;
+            cartDialog.dismiss();
+        });
+        btn512.setOnClickListener(v -> {
+            storage = 512;
+            cartDialog.dismiss();
+        });
+        btn1tb.setOnClickListener(v -> {
+            storage = 1024;
+            cartDialog.dismiss();
+        });
+        cartDialog.setOnCancelListener(dialog -> {
+            if (storage == 0) {
+                SweetAlertDialog errorDialog = new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE);
+                errorDialog.setTitleText("Almacenamiento no seleccionado");
+                errorDialog.show();
+                storageBolean = false;
+            }
+        });
+        cartDialog.show();
+        return storageBolean;
     }
     //Metodo que restablece el carrito y el total
     private void actualizarCarritoYContador() {

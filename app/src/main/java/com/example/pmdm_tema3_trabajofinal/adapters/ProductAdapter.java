@@ -1,5 +1,6 @@
 package com.example.pmdm_tema3_trabajofinal.adapters;
 
+import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
@@ -98,8 +99,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
         //listener que detecta que producto es seleccionado
         holder.btnCart.setOnClickListener(v ->{
             if (onProductSelectedListener != null) {
-                onProductSelectedListener.onProductSelected(producto);
-                Log.d("ProductAdapter", "Producto seleccionado: " + producto.toString());
+                //si es true que se escoja el almacenamiento se mete en el carrito
+                if (onProductSelectedListener.showCartStorage(producto)) {
+                    onProductSelectedListener.onProductSelected(producto);
+                    Log.d("ProductAdapter", "Producto seleccionado: " + producto.toString());
+                }else {
+                    Log.d("ProductAdapter", "El usuario no ha seleccionado el almacenamiento");
+                }
 
             }
         });
@@ -118,5 +124,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
 
     public interface OnProductSelectedListener {
         void onProductSelected(Producto producto);
+        Boolean showCartStorage(Producto producto);
+
     }
+
 }
