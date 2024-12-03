@@ -99,13 +99,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
         //listener que detecta que producto es seleccionado
         holder.btnCart.setOnClickListener(v ->{
             if (onProductSelectedListener != null) {
-                //si es true que se escoja el almacenamiento se mete en el carrito
-                if (onProductSelectedListener.showCartStorage(producto)) {
-                    onProductSelectedListener.onProductSelected(producto);
-                    Log.d("ProductAdapter", "Producto seleccionado: " + producto.toString());
-                }else {
-                    Log.d("ProductAdapter", "El usuario no ha seleccionado el almacenamiento");
-                }
+                onProductSelectedListener.showCartStorage(producto);
 
             }
         });
