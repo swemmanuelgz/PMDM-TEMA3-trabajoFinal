@@ -330,7 +330,8 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
     @Override
     public Boolean showCartStorage(Producto producto) {
         //Reiniciamos el boolean
-        storageBolean = true;
+        storageBolean = false;
+        storage = 0;
 
         Dialog cartDialog = new Dialog(MainActivity.this);
         cartDialog.setContentView(R.layout.storage_menu);
@@ -364,8 +365,8 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
                 SweetAlertDialog errorDialog = new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE);
                 errorDialog.setTitleText("Almacenamiento no seleccionado");
                 errorDialog.show();
-                storageBolean = false;
             }
+
         });
         cartDialog.show();
         return storageBolean;
