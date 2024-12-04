@@ -355,6 +355,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
            int id = view.getId();
            if (id == R.id.btn256) {
                storage = 256;
+               //Cuando se selecciona el almacenamiento llamamos al metodo
                onProductSelected(producto);
            } else if (id == R.id.btn512) {
                storage = 512;
