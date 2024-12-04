@@ -39,11 +39,11 @@ import java.util.Map;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class MainActivity extends AppCompatActivity implements ProductAdapter.OnProductSelectedListener {
+public class MainActivity extends AppCompatActivity implements ProductAdapter.OnProductSelectedListener{
     //atributos
     private TextView txtResumeOrder ;
     private TextView txtProductsContador,txtMessage;
-    private Dialog dialog;
+    private Dialog dialog,dialogStorage;
     private Button btnDialogCancelar, btnDialogConfirmar,btn256,btn512,btn1tb;
     private ImageButton btnCartShop, btnBuy, btnCart;
     private ConstraintLayout products,cart;
@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
     private TabLayout tabLayout;
     private int storage=0;
     private Boolean storageBolean = true;
+
 
 
     @Override
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         //View cartLayout = getLayoutInflater().inflate(R.layout.cart, null);
         cartAdapter = new CartAdapter(carritoList);
         cart = (ConstraintLayout) getLayoutInflater().inflate(R.layout.cart, null);
-         cartRecyclerView = cart.findViewById(R.id.recyclerViewCart);
+        cartRecyclerView = cart.findViewById(R.id.recyclerViewCart);
         cartRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         cartRecyclerView.setAdapter(cartAdapter);
 
@@ -97,7 +98,11 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(true);
         //Dialog Storage
-
+        dialogStorage = new Dialog(MainActivity.this);
+        dialogStorage.setContentView(R.layout.storage_menu);
+        dialogStorage.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialogStorage.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialogStorage.setCancelable(true);
         //TabLayout
         tabLayout = findViewById(R.id.tabLayout);
 
@@ -108,14 +113,18 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         txtBuscador = findViewById(R.id.txtBuscador);
 
         Switch sw = findViewById(R.id.sw);
-         btnCartShop = findViewById(R.id.btnCartShop);
-         btnBuy = findViewById(R.id.btnBuy);
-         btnCart = products.findViewById(R.id.btnCart);
+        btnCartShop = findViewById(R.id.btnCartShop);
+        btnBuy = findViewById(R.id.btnBuy);
+        btnCart = products.findViewById(R.id.btnCart);
         ConstraintLayout mainLayout= findViewById(R.id.txtProductsCount);
         btnDialogConfirmar = dialog.findViewById(R.id.btnConfirm);
         btnDialogCancelar = dialog.findViewById(R.id.btnCancel);
+        //Almacenamiento
+        btn256 = dialogStorage.findViewById(R.id.btn256);
+        btn512 = dialogStorage.findViewById(R.id.btn512);
+        btn1tb = dialogStorage.findViewById(R.id.btn1tb);
 
-      //Métodos para la compra
+        //Métodos para la compra
         btnDialogConfirmar.setOnClickListener(v -> {
             new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
                     .setTitleText("Compra realizada por: "+total.toString()+"€")
@@ -157,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         sw.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 mainLayout.setBackgroundColor(Color.BLACK);
-               // linearLayout.setBackgroundColor(Color.BLACK);
+                // linearLayout.setBackgroundColor(Color.BLACK);
                 productAdapter.setDarkMode(true);
                 btnBuy.setBackgroundColor(Color.BLACK);
                 btnCartShop.setBackgroundColor(Color.BLACK);
@@ -170,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
 
             } else {
                 mainLayout.setBackgroundColor(Color.WHITE);
-               // linearLayout.setBackgroundColor(Color.WHITE);
+                // linearLayout.setBackgroundColor(Color.WHITE);
                 productAdapter.setDarkMode(false);
                 btnBuy.setBackgroundColor(Color.WHITE);
                 btnCartShop.setBackgroundColor(Color.WHITE);
@@ -292,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
 
         //Verificamos si el carrito esta vacio
         if (carritoList.isEmpty()) {
-           Toast.makeText(this, "El carrito está vacío", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "El carrito está vacío", Toast.LENGTH_SHORT).show();
             return; // Salir de la función si el carrito está vacío
         }
         //Mostramos el dialog
@@ -315,8 +324,8 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
 
         String precioOrderStr = txtResumeOrder.getText().toString().replace("TOTAL: ","").replace("€","");
         double precioOrder = Double.parseDouble(precioOrderStr); //Pasar de String a double
-         this.total = precioOrder + precio;
-         //Redondeamos a dos decimales con el Round
+        this.total = precioOrder + precio;
+        //Redondeamos a dos decimales con el Round
         this.total = Math.round(total * 100.0) / 100.0;
         String resumeOrder = String.valueOf(this.total);
         txtResumeOrder.setText("TOTAL: "+resumeOrder+"€");
@@ -327,49 +336,60 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         cartAdapter.notifyDataSetChanged();
 
     }
+
     @Override
     public Boolean showCartStorage(Producto producto) {
         //Reiniciamos el boolean
-        storageBolean = true;
+        storageBolean = false;
+        storage = 0;
 
-        Dialog cartDialog = new Dialog(MainActivity.this);
-        cartDialog.setContentView(R.layout.storage_menu);
-        cartDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-        cartDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        cartDialog.setCancelable(true);
+
         //Configuramos la foto
-        ImageView imgFoto = cartDialog.findViewById(R.id.productImage);
+        ImageView imgFoto = dialogStorage.findViewById(R.id.productImage);
+        TextView txtTitulo = dialogStorage.findViewById(R.id.txtProductoName);
+        txtTitulo.setText(producto.getTitulo());
         imgFoto.setImageResource(producto.getFotoId());
 
-        btn256 = cartDialog.findViewById(R.id.btn256);
-        btn512 = cartDialog.findViewById(R.id.btn512);
-        btn1tb = cartDialog.findViewById(R.id.btn1tb);
+        //listener para botones
+        View.OnClickListener storageListener = view -> {
+            int id = view.getId();
+            if (id == R.id.btn256) {
+                storage = 256;
+                onProductSelected(producto);
+            } else if (id == R.id.btn512) {
+                storage = 512;
+                onProductSelected(producto);
+            } else if (id == R.id.btn1tb) {
+                onProductSelected(producto);
+                storage = 1024;
+            }
+            storageBolean = true;
+            Log.d("MainActivity", "Storage Selected: " + storage);
+            dialogStorage.dismiss();
 
-        //Se setea el almacenamiento
 
-        btn256.setOnClickListener(v -> {
-            storage = 256;
-            cartDialog.dismiss();
-        });
-        btn512.setOnClickListener(v -> {
-            storage = 512;
-            cartDialog.dismiss();
-        });
-        btn1tb.setOnClickListener(v -> {
-            storage = 1024;
-            cartDialog.dismiss();
-        });
-        cartDialog.setOnCancelListener(dialog -> {
+        };
+
+        //Asignamos listeners
+        btn256.setOnClickListener(storageListener);
+        btn512.setOnClickListener(storageListener);
+        btn1tb.setOnClickListener(storageListener);
+
+        dialogStorage.setOnCancelListener(dialog -> {
             if (storage == 0) {
                 SweetAlertDialog errorDialog = new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE);
                 errorDialog.setTitleText("Almacenamiento no seleccionado");
                 errorDialog.show();
-                storageBolean = false;
+                Log.d("MainActivity", "No almacenamiento seleccionado" );
             }
+
         });
-        cartDialog.show();
+        dialogStorage.show();
         return storageBolean;
     }
+
+
+
     //Metodo que restablece el carrito y el total
     private void actualizarCarritoYContador() {
         total = carritoList.stream()
@@ -400,7 +420,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         //Toas informativo de que se ha vaciado el carrito
         Toast.makeText(this, "Carrito vaciado", Toast.LENGTH_SHORT).show();
     }
-//Es el metodo que pasa a texto los nombres de los productos en el carrito
+    //Es el metodo que pasa a texto los nombres de los productos en el carrito
     public StringBuilder getCarrito() {
         StringBuilder builder = new StringBuilder();
         //Un hasmpap para recorrer el carrito
@@ -422,4 +442,6 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         }*/
         return builder;
     }
+
+
 }
