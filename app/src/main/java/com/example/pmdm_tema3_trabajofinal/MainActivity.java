@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
     private Dialog dialog,dialogStorage;
     private Button btnDialogCancelar, btnDialogConfirmar,btn256,btn512,btn1tb;
     private ImageButton btnCartShop, btnBuy, btnCart;
-    private ConstraintLayout products,cart;
+    private ConstraintLayout products,cart,mainLayout;
     int contador = 0;
     private Double total = 0.0;
     private ArrayList<Producto> carritoList = new ArrayList<>();
@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
     private TabLayout tabLayout;
     private int storage=0;
     private Boolean storageBolean = true;
+    private Switch sw;
 
 
 
@@ -112,11 +113,11 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         txtResumeOrder = findViewById(R.id.txtResumeOrder);
         txtBuscador = findViewById(R.id.txtBuscador);
 
-        Switch sw = findViewById(R.id.sw);
+         sw = findViewById(R.id.sw);
         btnCartShop = findViewById(R.id.btnCartShop);
         btnBuy = findViewById(R.id.btnBuy);
         btnCart = products.findViewById(R.id.btnCart);
-        ConstraintLayout mainLayout= findViewById(R.id.txtProductsCount);
+        mainLayout= findViewById(R.id.txtProductsCount);
         btnDialogConfirmar = dialog.findViewById(R.id.btnConfirm);
         btnDialogCancelar = dialog.findViewById(R.id.btnCancel);
         //Almacenamiento
@@ -164,32 +165,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         //Le ponemos un listener para poner el modo oscuro
         sw.setButtonDrawable(productRepository.getDrawableByName("luna"));
         sw.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                mainLayout.setBackgroundColor(Color.BLACK);
-                // linearLayout.setBackgroundColor(Color.BLACK);
-                productAdapter.setDarkMode(true);
-                btnBuy.setBackgroundColor(Color.BLACK);
-                btnCartShop.setBackgroundColor(Color.BLACK);
-                txtProductsContador.setTextColor(Color.WHITE);
-                sw.setButtonDrawable(productRepository.getDrawableByName("sol"));
-                txtBuscador.setHintTextColor(Color.WHITE);
-                txtBuscador.setTextColor(Color.WHITE);
-                tabLayout.setBackgroundColor(Color.BLACK);
-
-
-            } else {
-                mainLayout.setBackgroundColor(Color.WHITE);
-                // linearLayout.setBackgroundColor(Color.WHITE);
-                productAdapter.setDarkMode(false);
-                btnBuy.setBackgroundColor(Color.WHITE);
-                btnCartShop.setBackgroundColor(Color.WHITE);
-                txtProductsContador.setTextColor(Color.BLACK);
-                sw.setButtonDrawable(productRepository.getDrawableByName("luna"));
-                txtBuscador.setHintTextColor(Color.BLACK);
-                txtBuscador.setTextColor(Color.BLACK);
-                tabLayout.setBackgroundColor(Color.WHITE);
-
-            }
+            modoOscuro(isChecked);
 
         });
         //Listener para el buscador
@@ -260,7 +236,35 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         }
         productAdapter.updateProductList(filteredList);
     }
+    private void modoOscuro(Boolean darkMode) {
+        if (darkMode) {
+            mainLayout.setBackgroundColor(Color.BLACK);
+            // linearLayout.setBackgroundColor(Color.BLACK);
+            productAdapter.setDarkMode(true);
+            btnBuy.setBackgroundColor(Color.BLACK);
+            btnCartShop.setBackgroundColor(Color.BLACK);
+            txtProductsContador.setTextColor(Color.WHITE);
+            sw.setButtonDrawable(productRepository.getDrawableByName("sol"));
+            txtBuscador.setHintTextColor(Color.WHITE);
+            txtBuscador.setTextColor(Color.WHITE);
+            tabLayout.setBackgroundColor(Color.BLACK);
 
+
+
+        } else {
+            mainLayout.setBackgroundColor(Color.WHITE);
+            // linearLayout.setBackgroundColor(Color.WHITE);
+            productAdapter.setDarkMode(false);
+            btnBuy.setBackgroundColor(Color.WHITE);
+            btnCartShop.setBackgroundColor(Color.WHITE);
+            txtProductsContador.setTextColor(Color.BLACK);
+            sw.setButtonDrawable(productRepository.getDrawableByName("luna"));
+            txtBuscador.setHintTextColor(Color.BLACK);
+            txtBuscador.setTextColor(Color.BLACK);
+            tabLayout.setBackgroundColor(Color.WHITE);
+
+        }
+    }
     //Metodo que ensena un dialog del carrito
     private void showCartDialog() {
         Dialog cartDialog = new Dialog(MainActivity.this);
