@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        //Cogemos el repositorio usando el constructor por contexto
+        //Cogemos el repositorio usando el constructor por contexto s
         productRepository = new ProductRepository(this);
         productAdapter = new ProductAdapter(productRepository.getProductosList());
         productAdapter.setOnProductSelectedListener(this);
