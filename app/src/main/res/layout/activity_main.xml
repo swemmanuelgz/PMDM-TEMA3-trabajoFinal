@@ -8,18 +8,14 @@
     android:background="#FFFFFF"
     tools:context=".MainActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="411dp"
-        android:layout_height="602dp"
-        android:layout_marginStart="2dp"
-        android:focusable="auto"
-        android:focusableInTouchMode="true"
-        android:verticalScrollbarPosition="right"
-        app:layout_constraintBottom_toTopOf="@+id/btnBuy"
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="387dp"
+        android:layout_height="477dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnCartShop" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Switch
         android:id="@+id/sw"

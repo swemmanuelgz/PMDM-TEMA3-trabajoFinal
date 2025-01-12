@@ -22,18 +22,18 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.pmdm_tema3_trabajofinal.adapters.CartAdapter;
 import com.example.pmdm_tema3_trabajofinal.adapters.ProductAdapter;
 import com.example.pmdm_tema3_trabajofinal.model.Producto;
 import com.example.pmdm_tema3_trabajofinal.repository.ProductRepository;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
-
+import com.example.pmdm_tema3_trabajofinal.fragments.ProductListFragment;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.txtProductsCount), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -77,11 +78,14 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         productAdapter = new ProductAdapter(productRepository.getProductosList());
         productAdapter.setOnProductSelectedListener(this);
 
+        ProductListFragment fragment = new ProductListFragment(productAdapter);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+
 
         //Cogemos el recycler
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(productAdapter);
+       // RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this));
+       // recyclerView.setAdapter(productAdapter);
 
         //Cogemos el recycler
         //View cartLayout = getLayoutInflater().inflate(R.layout.cart, null);
@@ -446,6 +450,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         }*/
         return builder;
     }
+
 
 
 }
