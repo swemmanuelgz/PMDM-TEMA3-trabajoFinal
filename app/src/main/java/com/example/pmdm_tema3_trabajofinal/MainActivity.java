@@ -22,14 +22,17 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.pmdm_tema3_trabajofinal.adapters.CartAdapter;
 import com.example.pmdm_tema3_trabajofinal.adapters.ProductAdapter;
+import com.example.pmdm_tema3_trabajofinal.fragments.UserConfigFragment;
 import com.example.pmdm_tema3_trabajofinal.model.Producto;
 import com.example.pmdm_tema3_trabajofinal.repository.ProductRepository;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.example.pmdm_tema3_trabajofinal.fragments.ProductListFragment;
@@ -55,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
     private ProductAdapter productAdapter;
     private ProductRepository productRepository;
     private CartAdapter cartAdapter;
-    private TabLayout tabLayout;
     private int storage=0;
     private Boolean storageBolean = true;
     private Switch sw;
@@ -109,7 +111,6 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         dialogStorage.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialogStorage.setCancelable(true);
         //TabLayout
-        tabLayout = findViewById(R.id.tabLayout);
 
         products = (ConstraintLayout) getLayoutInflater().inflate(R.layout.product, null);
         //Cogemos el switch y otros elementos
@@ -128,6 +129,26 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         btn256 = dialogStorage.findViewById(R.id.btn256);
         btn512 = dialogStorage.findViewById(R.id.btn512);
         btn1tb = dialogStorage.findViewById(R.id.btn1tb);
+        //Referenciamos el BottomNavigationView
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        //Listener para cambiar de fragmentos
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            Fragment fragmentNav = null;
+            if (item.getItemId() == R.id.nav_user) {
+                fragmentNav = new UserConfigFragment();
+            } else if (item.getItemId() == R.id.nav_home) {
+                fragmentNav = new ProductListFragment(productAdapter);
+            } else if (item.getItemId() == R.id.nav_config) {
+                Toast.makeText(this, "Configuración Proximamente", Toast.LENGTH_SHORT).show();
+
+            }
+
+            if (fragmentNav != null) {
+                loadFragment(fragmentNav);
+            }
+            return true;
+        });
+
 
         //Métodos para la compra
         btnDialogConfirmar.setOnClickListener(v -> {
@@ -203,25 +224,7 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
             vaciarCarrito();
             return true;
         });
-        //listener para el tablayout
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                //Mostramos el toast de "proximanete"
-                Toast.makeText(MainActivity.this, "Proximanete", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-                //Cuando de se desselecciona
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                //Cuando se vuelve seleccionar
-            }
-        });
 
     }
 
@@ -251,7 +254,6 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
             sw.setButtonDrawable(productRepository.getDrawableByName("sol"));
             txtBuscador.setHintTextColor(Color.WHITE);
             txtBuscador.setTextColor(Color.WHITE);
-            tabLayout.setBackgroundColor(Color.BLACK);
 
 
 
@@ -265,7 +267,6 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
             sw.setButtonDrawable(productRepository.getDrawableByName("luna"));
             txtBuscador.setHintTextColor(Color.BLACK);
             txtBuscador.setTextColor(Color.BLACK);
-            tabLayout.setBackgroundColor(Color.WHITE);
 
         }
     }
@@ -451,6 +452,11 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.On
         return builder;
     }
 
-
+    private void loadFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
+    }
 
 }

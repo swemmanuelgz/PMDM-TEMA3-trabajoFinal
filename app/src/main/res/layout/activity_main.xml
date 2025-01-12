@@ -41,6 +41,7 @@
         android:background="@drawable/button_focus"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtContadorProducts"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/cart" />
 
@@ -49,14 +50,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="181dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="23dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="2dp"
         android:background="@drawable/button_focus"
-        app:layout_constraintBottom_toTopOf="@+id/tabLayout"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toStartOf="@+id/txtResumeOrder"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_container"
         app:srcCompat="@drawable/buy" />
 
     <TextView
@@ -66,15 +67,14 @@
         android:layout_marginStart="22dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="17dp"
-        android:layout_marginBottom="1dp"
         android:foregroundGravity="center_vertical"
         android:gravity="center"
         android:shadowColor="#FDB2B2"
         android:textColor="#FF5722"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tabLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/btnBuy"
         app:layout_constraintTop_toBottomOf="@+id/fragment_container" />
 
@@ -109,35 +109,20 @@
         app:layout_constraintStart_toEndOf="@+id/sw"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="417dp"
+        android:layout_height="67dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtResumeOrder"
-        app:layout_constraintVertical_bias="1.0">
+        app:menu="@menu/buttom_nav_menu" />
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/productos" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/novedades" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/configuraci_n" />
-    </com.google.android.material.tabs.TabLayout>
     <!-- En tu main_activity.xml -->
   <!--   <include layout="@layout/cart" /> -->
 
