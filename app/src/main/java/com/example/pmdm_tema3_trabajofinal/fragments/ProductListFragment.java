@@ -34,8 +34,7 @@ public class ProductListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        productRepository = new ProductRepository(getContext());
-        productAdapter = new ProductAdapter(productRepository.getProductosList());
+
     }
 
     @Override

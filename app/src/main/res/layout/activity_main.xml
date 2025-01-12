@@ -10,12 +10,14 @@
 
     <FrameLayout
         android:id="@+id/fragment_container"
-        android:layout_width="387dp"
-        android:layout_height="477dp"
+        android:layout_width="398dp"
+        android:layout_height="548dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.329" />
 
     <Switch
         android:id="@+id/sw"
@@ -61,18 +63,20 @@
         android:id="@+id/txtResumeOrder"
         android:layout_width="143dp"
         android:layout_height="49dp"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="37dp"
-        android:layout_marginEnd="26dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="1dp"
         android:foregroundGravity="center_vertical"
         android:gravity="center"
         android:shadowColor="#FDB2B2"
         android:textColor="#FF5722"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tabLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnBuy"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_container" />
 
     <TextView
         android:id="@+id/txtContadorProducts"

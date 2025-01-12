@@ -100,7 +100,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
         holder.btnCart.setOnClickListener(v ->{
             if (onProductSelectedListener != null) {
                 onProductSelectedListener.showCartStorage(producto);
-
+                System.out.println("Producto añadido al carrito"+producto.getTitulo());
             }
         });
 

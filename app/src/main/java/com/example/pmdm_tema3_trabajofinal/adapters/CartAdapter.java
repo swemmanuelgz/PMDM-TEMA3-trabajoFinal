@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -125,6 +126,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
         holder.skbCantidad.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                Toast.makeText(holder.itemView.getContext(), "Proximamente", Toast.LENGTH_SHORT).show();
                     holder.txtCantidad.setText(String.valueOf(progress));
                     int adapterPosition = holder.getAdapterPosition();
                     if (adapterPosition != RecyclerView.NO_POSITION && adapterPosition < carritoList.size()) {
